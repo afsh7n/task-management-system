@@ -3,6 +3,8 @@ import { ConfigSetupModule } from "./configs/config.module";
 import { CoreModule } from "./core/core.module";
 import { AcceptLanguageResolver, HeaderResolver, I18nJsonLoader, I18nModule } from 'nestjs-i18n';
 import * as path from 'path';
+import {AuthModule} from "./modules/auth/auth.module";
+import {UserModule} from "./modules/user/user.module";
 
 
 @Module({
@@ -21,6 +23,8 @@ import * as path from 'path';
         AcceptLanguageResolver,
       ],
     }),
+    AuthModule,
+    UserModule
   ],
   providers: [],
 

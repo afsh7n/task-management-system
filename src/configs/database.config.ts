@@ -7,7 +7,7 @@ const envVarsSchema = Joi.object({
     DB_PORT: Joi.number().default(3306),
     DB_USERNAME: Joi.string().default('root'),
     DB_PASSWORD: Joi.string().default(''),
-    DB_NAME: Joi.string().default('signalexact'),
+    DB_NAME: Joi.string().default('test'),
 }).unknown(true);
 
 const { error, value: validatedEnv } = envVarsSchema.validate(process.env);

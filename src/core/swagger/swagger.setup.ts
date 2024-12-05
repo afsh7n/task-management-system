@@ -15,7 +15,9 @@ export function setupSwagger(app: INestApplication): void {
     config.addBearerAuth(); // add auth
   }
 
-  const document = SwaggerModule.createDocument(app, config.build());
+  const document = SwaggerModule.createDocument(app, config.build(),{
+    ignoreGlobalPrefix:false,
+  });
   SwaggerModule.setup(swaggerConfig.docsPath, app, document, {
     swaggerOptions: {
       persistAuthorization: true,
