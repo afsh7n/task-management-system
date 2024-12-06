@@ -7,6 +7,7 @@ import { UpdateTaskDto } from '../dto/update-task.dto';
 import { UserEntity } from '../../user/entity/user.entity';
 import { TaskStatus } from '../enums/task-status.enum';
 import { FilterTasksDto } from '../dto/filter-tasks.dto';
+import {UserRole} from "../../user/enums/userRole.enums";
 
 @Injectable()
 export class TasksService {
@@ -28,7 +29,9 @@ export class TasksService {
         const { status, search } = filterDto;
         const query = this.taskRepository.createQueryBuilder('task');
 
-        query.where('task.userId = :userId', { userId: user.id });
+        if (UserRole.ADMIN != user.role){
+            query.where('task.userId = :userId', { userId: user.id });
+        }
 
         if (status) {
             query.andWhere('task.status = :status', { status });
@@ -49,9 +52,16 @@ export class TasksService {
         updateTaskDto: UpdateTaskDto,
         user: UserEntity,
     ): Promise<TaskEntity> {
-        const task = await this.taskRepository.findOne({
-            where: { id, user: { id: user.id } },
-        });
+        let task = null
+        if (UserRole.ADMIN == user.role){
+            task = await this.taskRepository.findOne({
+                where: { id},
+            });
+        }else {
+            task = await this.taskRepository.findOne({
+                where: { id, user: { id: user.id } },
+            });
+        }
 
         if (!task) {
             throw new NotFoundException(`Task with ID ${id} not found`);
@@ -63,9 +73,16 @@ export class TasksService {
     }
 
     async deleteTask(id: number, user: UserEntity): Promise<void> {
-        const task = await this.taskRepository.findOne({
-            where: { id, user: { id: user.id } },
-        });
+        let task = null
+        if (UserRole.ADMIN == user.role){
+            task = await this.taskRepository.findOne({
+                where: { id},
+            });
+        }else {
+            task = await this.taskRepository.findOne({
+                where: { id, user: { id: user.id } },
+            });
+        }
 
         if (!task) {
             throw new NotFoundException(`Task with ID ${id} not found`);

@@ -20,6 +20,7 @@ import { FilterTasksDto } from '../dto/filter-tasks.dto';
 import { UserEntity } from '../../user/entity/user.entity';
 import {AuthGuard} from "@nestjs/passport";
 import {User} from "../../auth/decorators/user.decorator";
+import {UserRole} from "../../user/enums/userRole.enums";
 
 @ApiTags('Tasks')
 @Controller('tasks')

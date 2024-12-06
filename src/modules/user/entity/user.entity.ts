@@ -2,6 +2,7 @@ import {Column, CreateDateColumn, Entity, ManyToOne, OneToMany, UpdateDateColumn
 import { BaseEntity } from '../../../common/entity/base.entity';
 import { Exclude } from 'class-transformer';
 import {TaskEntity} from "../../tasks/entities/task.entity";
+import {UserRole} from "../enums/userRole.enums";
 
 @Entity('users')
 export class UserEntity extends BaseEntity{
@@ -20,6 +21,13 @@ export class UserEntity extends BaseEntity{
 
     @Column({ default: true })
     isActive: boolean;
+
+    @Column({
+        type: 'enum',
+        enum: UserRole,
+        default: UserRole.USER,
+    })
+    role: UserRole;
 
     @CreateDateColumn()
     createdAt: Date;
