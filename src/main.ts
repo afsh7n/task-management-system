@@ -11,7 +11,6 @@ async function bootstrap() {
     forbidNonWhitelisted: true,
     transform: true,
   }));
-  app.use(I18nMiddleware);
   app.setGlobalPrefix(process.env.PREFIX_API)
   app.enableCors({
     origin: '*',

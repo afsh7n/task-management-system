@@ -7,8 +7,7 @@ import { RegisterDto } from '../dto/register/register.dto';
 import { RegisterService } from '../services/register.service';
 import {UserEntity} from "../../user/entity/user.entity";
 import {GlobalApiResponses} from "../../../common/decorators/globalApiResponses.decorator";
-import {LoginSuccessResponseDto} from "../responses/loginSuccessResponse.dto";
-import {ErrorResponseDto} from "../../../common/dto/errorResponse.dto";
+import {CustomHttpException} from "../../../common/exceptions/http.exception";
 
 @Controller('auth')
 @GlobalApiResponses()
@@ -30,12 +29,12 @@ export class RegisterController {
   @ApiResponse({
     status: 200,
     description: 'Register successful.',
-    type:LoginSuccessResponseDto
+    type:UserEntity
   })
   @ApiResponse({
     status: 400,
     description: 'Invalid credentials or input data.',
-    type: ErrorResponseDto,
+    type: CustomHttpException,
   })
   async register(@Body() registerDto: RegisterDto) {
     if (registerDto.identifier.startsWith('09')) {
